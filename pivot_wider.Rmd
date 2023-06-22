@@ -1,0 +1,205 @@
+---
+title: "R and databases"
+subtitle: "calidad"
+author: 
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    seal: false
+    #lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: False
+      ratio: '13:9'
+---
+
+class: center, middle
+
+.linea-superior[]
+.linea-inferior[]
+
+<img src="imagenes/logo_portada2.png" width="200" />
+
+## INE Educa: Clases abiertas de R
+
+## Tidy data: *pivot_wider()*
+
+## Proyecto Ciencia de Datos
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = TRUE)
+knitr::opts_chunk$set(message = FALSE, warning = F, eval = T, fig.align = "center") 
+options(scipen = "999")
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+library(dplyr)
+library(tidyr)
+
+xaringanExtra::use_panelset()
+
+
+```
+
+
+---
+
+
+background-image: url("imagenes/fondo2.PNG")
+background-size: contain;
+background-position: 100% 0%
+
+# Tidy data
+
+En ocasiones necesitamos tranformar la distribuición o formato de nuestros dataframes, desde **wide** a **long**, o viceversa
+
+--
+
+.center[<img src="imagenes/wide_long.png" height="300" />]
+
+--
+
+Para esto el paquete **tidyr** nos ofrece las funciones **pivot_longer()** y **pivot_wider()**
+
+--
+
+En este video revisaremos **pivot_wider()**
+
+
+
+
+
+
+---
+background-image: url("imagenes/fondo2.PNG")
+background-size: contain;
+background-position: 100% 0%
+
+# Tidy data *pivot_wider()*
+
+
+Esta función se puede considerar como la opuesta a **pivot_longer()**
+
+--
+
+.center[<img src="imagenes/tidyr-pivot_wider_longer.gif" height="300" />]
+
+--
+
+Esta función se utiliza para ordenar un dataframe de forma tal de mostrar categorías de una variable como columnas de un dataframe
+
+--
+
+Incrementa el número de las columnas y disminuye el número de las filas
+
+--
+
+El formato **wide** es útil para la presentación de cuadros de resumen con doble entrada y es mas legible para los humanos
+
+
+---
+background-image: url("imagenes/fondo2.PNG")
+background-size: contain;
+background-position: 100% 0%
+
+# Tidy data *pivot_wider()*
+
+Ejemplo de `pivot_wider()`:
+
+--
+
+```{r}
+
+df1 <- data.frame(region = c(1, 2),hombres = c(100, 200),mujeres = c(50, 300))
+
+df2 <- df1 %>%
+  pivot_longer(cols = -region , names_to = "sexo", values_to = "total_sexo")
+
+df2
+```
+
+--
+
+```{r,eval=T}
+library(tidyr)
+
+df2 %>% 
+  pivot_wider(names_from = "sexo",values_from = "total_sexo")
+
+
+```
+
+---
+
+background-image: url("imagenes/fondo2.PNG")
+background-size: contain;
+background-position: 100% 0%
+
+# Tidy data *pivot_wider()*
+
+## Función `pivot_wider()`
+
+```{r,echo=F}
+df2 %>% 
+  pivot_wider(names_from = "sexo",values_from = "total_sexo")
+
+```
+
+Los argumentos más comunes de esta función son:
+
+--
+
+- *names_from*: categorías que se quiere convertir en columnas
+
+- *values_from*: columna desde la cual extraer los valores
+
+---
+
+background-image: url("imagenes/fondo2.PNG")
+background-size: contain;
+background-position: 100% 0%
+
+# Tidy data
+
+En algunos casos, no contamos con una variable que contenga texto, para hacer el "pivoteo"
+
+```{r, echo=F}
+calidad::ene %>%
+  group_by(region, sexo) %>%
+  summarise(n = n())
+
+```
+
+--
+
+En esos casos, podemos usar el parámetro **names_prefix**
+
+```{r}
+calidad::ene %>%
+  group_by(region, sexo) %>%
+  summarise(n = n()) %>%
+  pivot_wider(names_from = sexo,
+              values_from = n,
+              names_prefix = "sexo" ) #<<
+```
+
+---
+
+
+class: center, middle
+
+.linea-superior[]
+.linea-inferior[]
+
+<img src="imagenes/logo_portada2.png" width="200" />
+
+
+## INE Educa: Clases abiertas de R
+
+## Proyecto Ciencia de Datos
+
+## Tidy data: *pivot_wider()*
