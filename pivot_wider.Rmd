@@ -48,7 +48,6 @@ xaringanExtra::use_panelset()
 
 ---
 
-
 background-image: url("imagenes/fondo2.PNG")
 background-size: contain;
 background-position: 100% 0%
@@ -69,10 +68,9 @@ Para esto el paquete **tidyr** nos ofrece las funciones **pivot_longer()** y **p
 
 En este video revisaremos **pivot_wider()**
 
+--
 
-
-
-
+Las animaciones utilizadas en esta presentación https://github.com/gadenbuie/tidyexplain
 
 ---
 background-image: url("imagenes/fondo2.PNG")
@@ -98,7 +96,7 @@ Incrementa el número de las columnas y disminuye el número de las filas
 
 --
 
-El formato **wide** es útil para la presentación de cuadros de resumen con doble entrada y es mas legible para los humanos
+El formato **wide** es útil para la presentación de cuadros de resumen con doble entrada y es más legible para los humanos
 
 
 ---
